@@ -41,7 +41,7 @@ namespace BeFaster.App.Solutions.CHK
 
             var specialOffers = this.SpecialOffers.Where(x => x.Price.HasValue).OrderBy(x => x.Quantity);
 
-            foreach (var specialOffer in SpecialOffers)
+            foreach (var specialOffer in specialOffers)
             {
                 var specialOfferMultiplier = quantity / specialOffer.Quantity;
                 quantity = quantity - (specialOfferMultiplier * quantity);
@@ -157,7 +157,8 @@ namespace BeFaster.App.Solutions.CHK
                     return -1;
                 }
 
-                totalPrice += CalculateItemPrice(sku.Value, item);
+                //totalPrice += CalculateItemPrice(sku.Value, item);
+                totalPrice += item.CalculatePrice(sku.Value);
 
                 totalPrice -= CalculateDiscount(skuQuantities, sku.Value, item);
             }
@@ -182,8 +183,10 @@ namespace BeFaster.App.Solutions.CHK
 
             var newOfferedItemQuantity = Math.Max(offeredItemQuantity - (quantity / specialOffer.Quantity), 0);
 
-            var offeredItemTotalPrice = CalculateItemPrice(offeredItemQuantity, offeredItem);
-            var newOfferedItemTotalPrice = CalculateItemPrice(newOfferedItemQuantity, offeredItem);
+            //var offeredItemTotalPrice = CalculateItemPrice(offeredItemQuantity, offeredItem);
+            //var newOfferedItemTotalPrice = CalculateItemPrice(newOfferedItemQuantity, offeredItem);
+            var offeredItemTotalPrice = offeredItem.CalculatePrice(offeredItemQuantity);
+            var newOfferedItemTotalPrice = offeredItem.CalculatePrice(newOfferedItemQuantity);
 
             if (newOfferedItemTotalPrice < offeredItemTotalPrice)
             {
@@ -207,6 +210,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
