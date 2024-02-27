@@ -35,6 +35,15 @@ namespace BeFaster.App.Solutions.CHK
 
         public List<SpecialOffer> SpecialOffers { get; }
 
+        public int CalculatePrice(int quantity)
+        {
+            var totalPrice = 0;
+
+
+
+            return totalPrice;
+        }
+
         public SpecialOffer GetBestSpecialOffer(int quantity)
         {
             SpecialOffer value = null;
@@ -188,6 +197,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
