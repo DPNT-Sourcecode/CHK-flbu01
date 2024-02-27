@@ -16,7 +16,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
         [InlineData("ABABCEEA", 260)]
         [InlineData("ABABCEEAAA", 330)]
         [InlineData("ABABCEEAAAA", 380)]
-        [InlineData("ABABCEEAAAAAAA", 520)]
+        [InlineData("ABABCEEAAAAAAA", 510)]
         [InlineData("AAAAAAAA", 330)]
         [InlineData("AAAAAAAAA", 380)]
         [InlineData("AAAAAEEBAAABB", 455)]
