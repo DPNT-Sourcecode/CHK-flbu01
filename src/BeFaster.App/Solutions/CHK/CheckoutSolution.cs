@@ -1,4 +1,5 @@
 ﻿using BeFaster.Runner.Exceptions;
+using System.CodeDom;
 using System.Collections.Generic;
 
 namespace BeFaster.App.Solutions.CHK
@@ -7,7 +8,7 @@ namespace BeFaster.App.Solutions.CHK
     //+------+-------+----------------+
     //| Item | Price | Special offers |
     //+------+-------+----------------+
-    //| A    | 50    | 3A for 130     |
+    //| A    | 50    | 3A for 130     | 101 - 132
     //| B    | 30    | 2B for 45      |
     //| C    | 20    |                |
     //| D    | 15    |                |
@@ -28,9 +29,29 @@ namespace BeFaster.App.Solutions.CHK
         };
         public static int ComputePrice(string skus)
         {
-            return -1;
+            if (string.IsNullOrEmpty(skus))
+            {
+                return -1;
+            }
+            var totalPrice = 0;
+
+            foreach(var c in skus)
+            {
+                if (!IsCapitalLetter(c))
+                {
+                    return -1;
+                }
+            }
+
+            return totalPrice;
+        }
+
+        private static bool IsCapitalLetter(char c)
+        {
+            return c >= 101 && c <= 132;
         }
     }
 }
+
 
 
