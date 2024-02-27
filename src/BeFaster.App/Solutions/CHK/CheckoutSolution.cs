@@ -29,6 +29,7 @@ namespace BeFaster.App.Solutions.CHK
         {
             this.Price = price;
             this.SpecialOffers = specialOffers ?? new List<SpecialOffer>();
+            this.SpecialOffers = this.SpecialOffers.OrderBy(x => x.Quantity).ToList();
         }
 
         public int Price { get; }
@@ -41,15 +42,21 @@ namespace BeFaster.App.Solutions.CHK
 
             var specialOffers = this.SpecialOffers.Where(x => x.Price.HasValue).OrderBy(x => x.Quantity);
 
+            var missingQuantity = quantity;
+
             foreach (var specialOffer in specialOffers)
             {
+                if (!specialOffer.Price.HasValue)
+                {
+                    continue;
+                }
                 var specialOfferMultiplier = quantity / specialOffer.Quantity;
-                quantity = quantity - (specialOfferMultiplier * quantity);
+                missingQuantity = missingQuantity - (specialOfferMultiplier * missingQuantity);
 
                 totalPrice += specialOfferMultiplier * specialOffer.Price.Value;
             }
 
-            totalPrice += quantity * this.Price;
+            totalPrice += missingQuantity * this.Price;
 
             return totalPrice;
         }
@@ -210,6 +217,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
