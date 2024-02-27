@@ -34,17 +34,14 @@ namespace BeFaster.App.Solutions.CHK
 
         public int Price { get; }
 
-        public List<SpecialOffer> SpecialOffers { get; }
+        public List<SpecialOffer> SpecialOffers { get; } //Replace by SortedSet ordered by quantity
 
         public int CalculatePrice(int quantity)
         {
             var totalPrice = 0;
-
-            var specialOffers = this.SpecialOffers.Where(x => x.Price.HasValue).OrderBy(x => x.Quantity);
-
             var missingQuantity = quantity;
 
-            foreach (var specialOffer in specialOffers)
+            foreach (var specialOffer in this.SpecialOffers)
             {
                 if (!specialOffer.Price.HasValue)
                 {
@@ -217,6 +214,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
