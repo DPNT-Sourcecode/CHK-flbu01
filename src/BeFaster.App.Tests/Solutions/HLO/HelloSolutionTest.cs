@@ -13,7 +13,8 @@ namespace BeFaster.App.Tests.Solutions.SUM
             var result = HelloSolution.Hello("string");
 
             //Assert
-            result.Should().Be("Hello world!");
+            result.Should().Be("Hello, World!");
         }
     }
 }
+
