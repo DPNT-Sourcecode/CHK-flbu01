@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace BeFaster.App.Solutions.CHK
 {
-    //Our price table and offers: 
+    // Round 1
     //+------+-------+----------------+
     //| Item | Price | Special offers |
     //+------+-------+----------------+
@@ -13,6 +13,29 @@ namespace BeFaster.App.Solutions.CHK
     //| C    | 20    |                |
     //| D    | 15    |                |
     //+------+-------+----------------+
+    // Round 2
+    //+------+-------+------------------------+
+    //| Item | Price | Special offers         |
+    //+------+-------+------------------------+
+    //| A    | 50    | 3A for 130, 5A for 200 |
+    //| B    | 30    | 2B for 45              |
+    //| C    | 20    |                        |
+    //| D    | 15    |                        |
+    //| E    | 40    | 2E get one B free      |
+    //+------+-------+------------------------+
+    public class SpecialOffer 
+    {
+        public SpecialOffer(int quantity, int? price, char? itemOffer = null)
+        {
+            this.Quantity = quantity;
+            this.Price = price;
+            this.ItemOffer = itemOffer;
+        }
+        public int Quantity { get; }
+        public int? Price { get; }
+        public char? ItemOffer { get; }
+    }
+
     public static class CheckoutSolution
     {
         private static Dictionary<char, int> prices = new Dictionary<char, int>
@@ -20,12 +43,14 @@ namespace BeFaster.App.Solutions.CHK
             { 'A', 50 },
             { 'B', 30 },
             { 'C', 20 },
-            { 'D', 15 }
+            { 'D', 15 },
+            { 'E', 40 }
         };
-        private static Dictionary<char, (int Quantity, int Price)> specialOffers = new Dictionary<char, (int Quantity, int Price)>
+        private static Dictionary<char, SpecialOffer> specialOffers = new Dictionary<char, SpecialOffer>
         {
-            { 'A', (3, 130) },
-            { 'B', (2, 45) }
+            { 'A', new SpecialOffer(3, 130) },
+            { 'B', new SpecialOffer(2, 45) },
+            { 'E', new SpecialOffer(2, null, 'B') }
         };
         public static int ComputePrice(string skus)
         {
@@ -82,5 +107,6 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
