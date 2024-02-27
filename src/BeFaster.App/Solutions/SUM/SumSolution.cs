@@ -1,4 +1,5 @@
 ﻿using BeFaster.Runner.Exceptions;
+using System;
 
 namespace BeFaster.App.Solutions.SUM
 {
@@ -6,7 +7,13 @@ namespace BeFaster.App.Solutions.SUM
     {
         public static int Sum(int x, int y)
         {
-            throw new SolutionNotImplementedException();
+            if (x < 0 || x > 100 || y < 0 || y > 100)
+            {
+                throw new ArgumentNullException("Parameter not within the required range [0-100].");
+            }
+
+            return x + y;
         }
     }
 }
+

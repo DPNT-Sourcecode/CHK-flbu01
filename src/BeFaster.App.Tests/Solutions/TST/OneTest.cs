@@ -1,12 +1,20 @@
 using BeFaster.App.Solutions.TST;
+using FluentAssertions;
 namespace BeFaster.App.Tests.Solutions.TST
 {
-    public class OneTest {
-    
+    public class OneTest
+    {
+
         [Fact]
-        public void RunApply() {
-            Assert.Equal(1, One.apply());
+        public void RunApply()
+        {
+            //Arrange
+            var result = One.apply();
+
+            //Assert
+            result.Should().Be(1);
         }
     }
 }
+
 
