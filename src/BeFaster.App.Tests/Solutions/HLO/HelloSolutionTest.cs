@@ -6,15 +6,18 @@ namespace BeFaster.App.Tests.Solutions.SUM
 {
     public class HelloSolutionTest
     {
-        [Fact]
-        public void Hello()
+        [Theory]
+        [InlineData("John", "Hello, John!")]
+        [InlineData("", "Hello, !")]
+        public void Hello(string friendName, string expectedResult)
         {
             //Arrange
-            var result = HelloSolution.Hello("string");
+            var result = HelloSolution.Hello(friendName);
 
             //Assert
-            result.Should().Be("Hello, World!");
+            result.Should().Be(expectedResult);
         }
     }
 }
+
 
