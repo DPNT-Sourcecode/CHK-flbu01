@@ -47,9 +47,19 @@ namespace BeFaster.App.Solutions.CHK
                 {
                     continue;
                 }
-                totalPrice -= specialOffer.DiscountOffer(missingQuantity, this.Price);
+                if (missingQuantity == 0)
+                {
+                    return totalPrice;
+                }
 
-                missingQuantity = (missingQuantity - specialOffer.Quantity) * (missingQuantity / specialOffer.Quantity);
+                var discount = specialOffer.DiscountOffer(missingQuantity, this.Price);
+
+                totalPrice -= discount;
+
+                if (discount > 0)
+                {
+                    missingQuantity = (missingQuantity - specialOffer.Quantity) * (missingQuantity / specialOffer.Quantity);
+                }
             }
 
             return totalPrice;
@@ -168,6 +178,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
