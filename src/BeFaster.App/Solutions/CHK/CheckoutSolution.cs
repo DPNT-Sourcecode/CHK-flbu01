@@ -59,6 +59,11 @@ namespace BeFaster.App.Solutions.CHK
 
             return value;
         }
+
+        public SpecialOffer GetSpecialOfferForOtherItems(int quantity)
+        {
+            return this.SpecialOffers.FirstOrDefault(x => x.Quantity > quantity && x.Item.HasValue);
+        }
     }
 
     public class SpecialOffer
@@ -180,5 +185,6 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
