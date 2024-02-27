@@ -8,7 +8,7 @@ namespace BeFaster.App.Solutions.CHK
     //+------+-------+----------------+
     //| Item | Price | Special offers |
     //+------+-------+----------------+
-    //| A    | 50    | 3A for 130     | 101 - 132
+    //| A    | 50    | 3A for 130     |
     //| B    | 30    | 2B for 45      |
     //| C    | 20    |                |
     //| D    | 15    |                |
@@ -22,7 +22,7 @@ namespace BeFaster.App.Solutions.CHK
             { 'C', 20 },
             { 'D', 15 }
         };
-        private static Dictionary<char, (int quantity, int price)> specialOffers = new Dictionary<char, (int quantity, int price)>
+        private static Dictionary<char, (int Quantity, int Price)> specialOffers = new Dictionary<char, (int Quantity, int Price)>
         {
             { 'A', (3, 130) },
             { 'B', (2, 45) }
@@ -33,7 +33,7 @@ namespace BeFaster.App.Solutions.CHK
             {
                 return -1;
             }
-            var checkoutQuantities = new Dictionary<char, int>();
+            var checkoutItemQuantities = new Dictionary<char, int Quantity>();
 
             foreach(var c in skus)
             {
@@ -42,13 +42,24 @@ namespace BeFaster.App.Solutions.CHK
                     return -1;
                 }
 
-                if (checkoutQuantities.TryGetValue(c, out var quantity))
+                if (checkoutItemQuantities.TryGetValue(c, out var quantity))
                 {
-                    checkoutQuantities[c] = quantity + 1;
+                    checkoutItemQuantities[c] = quantity + 1;
                 }
                 else
                 {
-                    checkoutQuantities.Add(c, 1);
+                    checkoutItemQuantities.Add(c, 1);
+                }
+            }
+
+            var totalPrice = 0;
+
+            foreach (var checkoutItem in checkoutItemQuantities)
+            {
+                if (specialOffers.TryGetValue(checkoutItem.Key, out var specialOffer) && specialOffer.Quantity <= checkoutItem.Value)
+                {
+                    var offerMultiplier = checkoutItem.Value / specialOffer.Quantity; 
+                    totalPrice += offerMultiplier * specialOffer.Price + ;
                 }
             }
 
@@ -61,6 +72,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
