@@ -24,15 +24,15 @@ namespace BeFaster.App.Solutions.CHK
     //+------+-------+------------------------+
     public class Item
     {
-        public Item(int price, List<SpecialOffer> specialOffer = null)
+        public Item(int price, List<SpecialOffer> specialOffers = null)
         {
             this.Price = price;
-            this.SpecialOffer = specialOffer ?? new List<SpecialOffer>();
+            this.SpecialOffers = specialOffers ?? new List<SpecialOffer>();
         }
 
         public int Price { get; }
 
-        public List<SpecialOffer> SpecialOffer { get; }
+        public List<SpecialOffer> SpecialOffers { get; }
     }
 
     public class SpecialOffer
@@ -56,7 +56,7 @@ namespace BeFaster.App.Solutions.CHK
             { 'B', new Item(30, new List<SpecialOffer>{ new SpecialOffer(2, 45) }) },
             { 'C', new Item(20) },
             { 'D', new Item(15) },
-            { 'E', new Item(40, new List<SpecialOffer>{ { new SpecialOffer(2, null, 'B') }) }
+            { 'E', new Item(40, new List<SpecialOffer>{ new SpecialOffer(2, null, 'B') }) }
         };
 
         public static int ComputePrice(string skus)
@@ -142,8 +142,3 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
-
-
-
-
-
