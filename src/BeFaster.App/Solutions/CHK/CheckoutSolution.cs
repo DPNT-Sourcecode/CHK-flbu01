@@ -1,6 +1,7 @@
 ﻿using BeFaster.Runner.Exceptions;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace BeFaster.App.Solutions.CHK
 {
@@ -66,7 +67,7 @@ namespace BeFaster.App.Solutions.CHK
             {
                 return 0;
             }
-            var itemQuantities = new Dictionary<char, int>();
+            var skuQuantities = new Dictionary<char, int>();
 
             foreach(var c in skus)
             {
@@ -87,27 +88,29 @@ namespace BeFaster.App.Solutions.CHK
 
             var totalPrice = 0;
 
-            foreach (var item in itemQuantities)
+            foreach (var sku in skuQuantities)
             {
-                if(!prices.TryGetValue(item.Key, out var price))
+                if(!prices.TryGetValue(sku.Key, out var price))
                 {
                     return -1;
                 }
+
+                totalPrice += CalculateItemPrice(sku.Value, price);
 
                 if (price.SpecialOffer != null)
                 {
                     //var offerMultiplier = item.Value / specialOffer.Quantity;
                     //var remainder = item.Value - (offerMultiplier * specialOffer.Quantity);
                     //totalPrice += (offerMultiplier * specialOffer.Price.Value) + (remainder * price);
-                    totalPrice += CalculateItemPrice(item.Value, price);
+                    
                 }
                 else
                 {
-                    if (itemQuantities.TryGetValue(specialOffer.ItemOffer.Value, out var itemOfferQuantity))
+                    if (skuQuantities.TryGetValue(specialOffer.ItemOffer.Value, out var itemOfferQuantity))
                     {
                         totalPrice -= CalculateDiscount(specialOffer.ItemOffer.Value, itemOfferQuantity);
                     }
-                    totalPrice += price * item.Value;
+                    totalPrice += price * sku.Value;
                 }
             }
 
@@ -129,13 +132,18 @@ namespace BeFaster.App.Solutions.CHK
 
         private static int CalculateItemPrice(int quantity, Item item)
         {
-            if(spec)
-            var offerMultiplier = quantity / specialOffer.Quantity;
-            var remainder = quantity - (offerMultiplier * specialOffer.Quantity);
-            return (offerMultiplier * specialOffer.Price.Value) + (remainder * price);
+            if (item.SpecialOffer?.Price != null && quantity >= item.SpecialOffer.Quantity)
+            {
+                var offerMultiplier = quantity / item.SpecialOffer.Quantity;
+                var remainder = quantity - (offerMultiplier * item.SpecialOffer.Quantity);
+                return (offerMultiplier * item.SpecialOffer.Price.Value) + (remainder * item.Price);
+            }
+
+            return quantity * item.Price;
 
         }
     }
 }
+
 
 
