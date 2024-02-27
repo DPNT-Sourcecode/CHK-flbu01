@@ -49,35 +49,10 @@ namespace BeFaster.App.Solutions.CHK
                 }
                 totalPrice -= specialOffer.DiscountOffer(missingQuantity, this.Price);
 
-
+                missingQuantity = missingQuantity - (quantity / specialOffer.Quantity);
             }
 
             return totalPrice;
-        }
-
-        public SpecialOffer GetBestSpecialOffer(int quantity)
-        {
-            SpecialOffer value = null;
-            foreach (var specialOffer in this.SpecialOffers)
-            {
-                if (specialOffer.Quantity > quantity)
-                {
-                    continue;
-                }
-
-                if (value == null)
-                {
-                    value = specialOffer;
-                    continue;
-                }
-
-                if (specialOffer.CalculateItemPrice(quantity, this.Price) < value.CalculateItemPrice(quantity, this.Price))
-                {
-                    value = specialOffer;
-                }
-            }
-
-            return value;
         }
 
         public SpecialOffer GetSpecialOfferForOtherItems(int quantity)
@@ -156,7 +131,6 @@ namespace BeFaster.App.Solutions.CHK
                     return -1;
                 }
 
-                //totalPrice += CalculateItemPrice(sku.Value, item);
                 totalPrice += item.CalculatePrice(sku.Value);
 
                 totalPrice -= CalculateDiscount(skuQuantities, sku.Value, item);
@@ -182,8 +156,6 @@ namespace BeFaster.App.Solutions.CHK
 
             var newOfferedItemQuantity = Math.Max(offeredItemQuantity - (quantity / specialOffer.Quantity), 0);
 
-            //var offeredItemTotalPrice = CalculateItemPrice(offeredItemQuantity, offeredItem);
-            //var newOfferedItemTotalPrice = CalculateItemPrice(newOfferedItemQuantity, offeredItem);
             var offeredItemTotalPrice = offeredItem.CalculatePrice(offeredItemQuantity);
             var newOfferedItemTotalPrice = offeredItem.CalculatePrice(newOfferedItemQuantity);
 
@@ -194,20 +166,8 @@ namespace BeFaster.App.Solutions.CHK
 
             return 0;
         }
-
-        private static int CalculateItemPrice(int quantity, Item item)
-        {
-            var bestSpecialOffer = item.GetBestSpecialOffer(quantity);
-
-            if (bestSpecialOffer != null)
-            {
-                return bestSpecialOffer.CalculateItemPrice(quantity, item.Price);
-            }
-
-            return quantity * item.Price;
-
-        }
     }
 }
+
 
 
