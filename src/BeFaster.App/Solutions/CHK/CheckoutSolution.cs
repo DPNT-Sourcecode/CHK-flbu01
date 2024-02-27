@@ -46,8 +46,10 @@ namespace BeFaster.App.Solutions.CHK
                 var specialOfferMultiplier = quantity / specialOffer.Quantity;
                 quantity = quantity - (specialOfferMultiplier * quantity);
 
-                totalPrice += specialOfferMultiplier * specialOffer.Price.Value
+                totalPrice += specialOfferMultiplier * specialOffer.Price.Value;
             }
+
+            totalPrice += quantity * this.Price;
 
             return totalPrice;
         }
@@ -205,5 +207,6 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
