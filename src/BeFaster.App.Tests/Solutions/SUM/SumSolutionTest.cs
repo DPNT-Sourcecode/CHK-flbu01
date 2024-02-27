@@ -1,15 +1,15 @@
 ﻿using BeFaster.App.Solutions.SUM;
-using NUnit.Framework;
 
 namespace BeFaster.App.Tests.Solutions.SUM
 {
-    [TestFixture]
     public class SumSolutionTest
     {
-        [TestCase(1, 1, ExpectedResult = 2)]
-        public int ComputeSum(int x, int y)
+        [Theory]
+        [InlineData(1, 1, 2)]
+        public void ComputeSum(int x, int y, int expectedResult)
         {
-            return SumSolution.Sum(x, y);
+            Assert.Equal(SumSolution.Sum(x, y), expectedResult);
         }
     }
 }
+
