@@ -24,7 +24,7 @@ namespace BeFaster.App.Solutions.CHK
     //+------+-------+------------------------+
     public class Item
     {
-        public Item(int price, SpecialOffer specialOffer = null)
+        public Item(int price, Dictionary<int, SpecialOffer> specialOffer = null)
         {
             this.Price = price;
             this.SpecialOffer = specialOffer;
@@ -32,7 +32,7 @@ namespace BeFaster.App.Solutions.CHK
 
         public int Price { get; }
 
-        public SpecialOffer SpecialOffer { get; }
+        public Dictionary<int, SpecialOffer> SpecialOffer { get; }
     }
 
     public class SpecialOffer
@@ -52,11 +52,11 @@ namespace BeFaster.App.Solutions.CHK
     {
         private static Dictionary<char, Item> prices = new Dictionary<char, Item>
         {
-            { 'A', new Item(50, new SpecialOffer(3, 130)) },
-            { 'B', new Item(30, new SpecialOffer(2, 45)) },
+            { 'A', new Item(50, new Dictionary<int, SpecialOffer>{ { 3, new SpecialOffer(3, 130) }, { 5, new SpecialOffer(3, 200) } }) },
+            { 'B', new Item(30, new Dictionary<int, SpecialOffer>{ { 2, new SpecialOffer(2, 45) } }) },
             { 'C', new Item(20) },
             { 'D', new Item(15) },
-            { 'E', new Item(40, new SpecialOffer(2, null, 'B')) }
+            { 'E', new Item(40, new Dictionary<int, SpecialOffer>{ { 2, new SpecialOffer(2, null, 'B') } }) }
         };
 
         public static int ComputePrice(string skus)
@@ -142,6 +142,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
