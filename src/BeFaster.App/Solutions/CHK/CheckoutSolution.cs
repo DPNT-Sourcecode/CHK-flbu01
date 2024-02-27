@@ -38,7 +38,7 @@ namespace BeFaster.App.Solutions.CHK
 
         public int CalculatePrice(int quantity)
         {
-            var totalPrice = 0;
+            var totalPrice = quantity * this.Price;
             var missingQuantity = quantity;
 
             foreach (var specialOffer in this.SpecialOffers)
@@ -48,15 +48,13 @@ namespace BeFaster.App.Solutions.CHK
                     continue;
                 }
 
-
-
                 var specialOfferMultiplier = quantity / specialOffer.Quantity;
                 missingQuantity = missingQuantity - (specialOfferMultiplier * missingQuantity);
 
-                totalPrice += specialOfferMultiplier * specialOffer.Price.Value;
-            }
+                totalPrice -= (specialOfferMultiplier * specialOffer.Price.Value;
 
-            totalPrice += missingQuantity * this.Price;
+
+            }
 
             return totalPrice;
         }
@@ -104,18 +102,18 @@ namespace BeFaster.App.Solutions.CHK
         public int? Price { get; }
         public char? Item { get; }
 
-        public int CalculateItemPrice(int quantity, int unitPrice)
+        public int DiscountOffer(int quantity, int unitPrice)
         {
+            var totalPrice = quantity * unitPrice;
             if (this.Price != null && quantity >= this.Quantity)
             {
                 var offerMultiplier = quantity / this.Quantity;
-                var remainder = quantity - (offerMultiplier * this.Quantity);
-                var totalPrice = (offerMultiplier * this.Price.Value) + (remainder * unitPrice);
+                var price = offerMultiplier * this.Price.Value;
 
-                return totalPrice;
+                return totalPrice - price;
             }
 
-            return quantity * unitPrice;
+            return 0;
         }
     }
 
@@ -217,3 +215,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
