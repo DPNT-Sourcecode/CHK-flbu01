@@ -39,15 +39,15 @@ namespace BeFaster.App.Solutions.CHK
     
     public class SpecialOffer 
     {
-        public SpecialOffer(int quantity, int? price, char? itemOffer = null)
+        public SpecialOffer(int quantity, int? price, char? item = null)
         {
             this.Quantity = quantity;
             this.Price = price;
-            this.ItemOffer = itemOffer;
+            this.Item = item;
         }
         public int Quantity { get; }
         public int? Price { get; }
-        public char? ItemOffer { get; }
+        public char? Item { get; }
     }
 
     public static class CheckoutSolution
@@ -97,12 +97,7 @@ namespace BeFaster.App.Solutions.CHK
 
                 totalPrice += CalculateItemPrice(sku.Value, item);
 
-                totalPrice -= CalculateDiscount(sku.Value, item);
-
-                if (skuQuantities.TryGetValue(specialOffer.ItemOffer.Value, out var itemOfferQuantity))
-                {
-                    totalPrice -= CalculateDiscount(specialOffer.ItemOffer.Value, itemOfferQuantity);
-                }
+                totalPrice -= CalculateDiscount(skuQuantities, sku.Value, item);
             }
 
             return totalPrice;
@@ -113,13 +108,16 @@ namespace BeFaster.App.Solutions.CHK
             return c >= 65 && c <= 90;
         }
 
-        private static int CalculateDiscount(int quantity, Item item)
+        private static int CalculateDiscount(Dictionary<char, int> skuQuantities, int quantity, Item item)
         {
-            if (item.SpecialOffer?.ItemOffer == null || )
+            if (item.SpecialOffer?.Item == null
+                || !prices.TryGetValue(item.SpecialOffer.Item.Value, out var offeredItem)
+                || !skuQuantities.TryGetValue(item.SpecialOffer.Item.Value, out var offeredItemQuantity))
             {
-                return 
+                return 0;
             }
-            if (!prices.TryGetValue(item, out var price))
+
+            if ()
             {
                 return 0;
             }
@@ -139,3 +137,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
