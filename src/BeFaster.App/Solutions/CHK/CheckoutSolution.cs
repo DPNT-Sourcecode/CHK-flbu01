@@ -39,13 +39,14 @@ namespace BeFaster.App.Solutions.CHK
         {
             var totalPrice = 0;
 
-            this.SpecialOffers.OrderBy(x => x.Quantity);
+            var specialOffers = this.SpecialOffers.Where(x => x.Price.HasValue).OrderBy(x => x.Quantity);
 
             foreach (var specialOffer in SpecialOffers)
             {
                 var specialOfferMultiplier = quantity / specialOffer.Quantity;
-                var remainder = quantity - (specialOfferMultiplier * quantity);
+                quantity = quantity - (specialOfferMultiplier * quantity);
 
+                totalPrice += specialOfferMultiplier * specialOffer.Price.Value
             }
 
             return totalPrice;
@@ -204,4 +205,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
