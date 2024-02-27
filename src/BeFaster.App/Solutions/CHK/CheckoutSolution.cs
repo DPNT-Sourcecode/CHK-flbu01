@@ -1,7 +1,5 @@
-﻿using BeFaster.Runner.Exceptions;
-using System.CodeDom;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace BeFaster.App.Solutions.CHK
 {
@@ -36,8 +34,8 @@ namespace BeFaster.App.Solutions.CHK
 
         public SpecialOffer SpecialOffer { get; }
     }
-    
-    public class SpecialOffer 
+
+    public class SpecialOffer
     {
         public SpecialOffer(int quantity, int? price, char? item = null)
         {
@@ -69,20 +67,20 @@ namespace BeFaster.App.Solutions.CHK
             }
             var skuQuantities = new Dictionary<char, int>();
 
-            foreach(var c in skus)
+            foreach (var c in skus)
             {
                 if (!IsCapitalLetter(c))
                 {
                     return -1;
                 }
 
-                if (itemQuantities.TryGetValue(c, out var quantity))
+                if (skuQuantities.TryGetValue(c, out var quantity))
                 {
-                    itemQuantities[c] = quantity + 1;
+                    skuQuantities[c] = quantity + 1;
                 }
                 else
                 {
-                    itemQuantities.Add(c, 1);
+                    skuQuantities.Add(c, 1);
                 }
             }
 
@@ -90,7 +88,7 @@ namespace BeFaster.App.Solutions.CHK
 
             foreach (var sku in skuQuantities)
             {
-                if(!prices.TryGetValue(sku.Key, out var item))
+                if (!prices.TryGetValue(sku.Key, out var item))
                 {
                     return -1;
                 }
@@ -117,10 +115,9 @@ namespace BeFaster.App.Solutions.CHK
                 return 0;
             }
 
-            if ()
-            {
-                return 0;
-            }
+            var newOfferedItemQuantity = Math.Max(offeredItemQuantity - (quantity / item.SpecialOffer.Quantity), 0);
+
+            return Math.Min(CalculateItemPrice(offeredItemQuantity, offeredItem), CalculateItemPrice(newOfferedItemQuantity, offeredItem));
         }
 
         private static int CalculateItemPrice(int quantity, Item item)
@@ -137,4 +134,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
