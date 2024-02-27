@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BeFaster.App.Solutions.CHK
 {
@@ -33,6 +34,43 @@ namespace BeFaster.App.Solutions.CHK
         public int Price { get; }
 
         public List<SpecialOffer> SpecialOffers { get; }
+
+        public SpecialOffer GetBestSpecialOffer(int quantity)
+        {
+            SpecialOffer value = null;
+            foreach (var specialOffer in this.SpecialOffers)
+            {
+                if (specialOffer.Quantity > quantity)
+                {
+                    continue;
+                }
+
+                if (value == null)
+                {
+                    value = specialOffer;
+                    continue;
+                }
+
+                if (CalculateItemPrice(quantity, specialOffer) < CalculateItemPrice(quantity, value))
+                {
+                    value = specialOffer;
+                }
+            }
+
+            return value;
+        }
+
+        public int CalculateItemPrice(int quantity, SpecialOffer specialOffer)
+        {
+            if (specialOffer?.Price != null && quantity >= specialOffer.Quantity)
+            {
+                var offerMultiplier = quantity / specialOffer.Quantity;
+                var remainder = quantity - (offerMultiplier * specialOffer.Quantity);
+                return (offerMultiplier * specialOffer.Price.Value) + (remainder * this.Price);
+            }
+
+            return quantity * this.Price;
+        }
     }
 
     public class SpecialOffer
@@ -142,3 +180,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
