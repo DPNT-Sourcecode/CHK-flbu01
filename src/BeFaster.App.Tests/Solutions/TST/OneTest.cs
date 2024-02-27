@@ -1,5 +1,6 @@
 using BeFaster.App.Solutions.TST;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace BeFaster.App.Tests.Solutions.TST
 {
@@ -7,7 +8,8 @@ namespace BeFaster.App.Tests.Solutions.TST
     
         [Test]
         public void RunApply() {
-            Assert.AreEqual(One.apply(), 1);
+            ClassicAssert.AreEqual(One.apply(), 1);
         }
     }
 }
+
