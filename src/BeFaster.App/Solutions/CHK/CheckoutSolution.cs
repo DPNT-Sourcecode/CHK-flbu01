@@ -33,7 +33,7 @@ namespace BeFaster.App.Solutions.CHK
             {
                 return -1;
             }
-            var checkoutItemQuantities = new Dictionary<char, int Quantity>();
+            var itemQuantities = new Dictionary<char, int>();
 
             foreach(var c in skus)
             {
@@ -42,24 +42,34 @@ namespace BeFaster.App.Solutions.CHK
                     return -1;
                 }
 
-                if (checkoutItemQuantities.TryGetValue(c, out var quantity))
+                if (itemQuantities.TryGetValue(c, out var quantity))
                 {
-                    checkoutItemQuantities[c] = quantity + 1;
+                    itemQuantities[c] = quantity + 1;
                 }
                 else
                 {
-                    checkoutItemQuantities.Add(c, 1);
+                    itemQuantities.Add(c, 1);
                 }
             }
 
             var totalPrice = 0;
 
-            foreach (var checkoutItem in checkoutItemQuantities)
+            foreach (var item in itemQuantities)
             {
-                if (specialOffers.TryGetValue(checkoutItem.Key, out var specialOffer) && specialOffer.Quantity <= checkoutItem.Value)
+                if(!prices.TryGetValue(item.Key, out var price))
                 {
-                    var offerMultiplier = checkoutItem.Value / specialOffer.Quantity; 
-                    totalPrice += offerMultiplier * specialOffer.Price + ;
+                    return -1;
+                }
+
+                if (specialOffers.TryGetValue(item.Key, out var specialOffer) && specialOffer.Quantity <= item.Value)
+                {
+                    var offerMultiplier = item.Value / specialOffer.Quantity;
+                    var remainder = item.Value - (offerMultiplier * specialOffer.Quantity);
+                    totalPrice += (offerMultiplier * specialOffer.Price) + (remainder * price);
+                }
+                else
+                {
+                    totalPrice += price * item.Value;
                 }
             }
 
@@ -72,8 +82,3 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
-
-
-
-
-

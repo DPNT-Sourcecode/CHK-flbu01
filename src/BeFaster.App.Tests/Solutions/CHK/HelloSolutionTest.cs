@@ -1,7 +1,8 @@
 ﻿using BeFaster.App.Solutions.HLO;
+using BeFaster.App.Solutions.SUM;
 using FluentAssertions;
 
-namespace BeFaster.App.Tests.Solutions.HLO
+namespace BeFaster.App.Tests.Solutions.SUM
 {
     public class HelloSolutionTest
     {
