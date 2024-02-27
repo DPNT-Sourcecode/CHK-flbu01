@@ -25,7 +25,7 @@ namespace BeFaster.App.Solutions.CHK
     //+------+-------+------------------------+
     public class Item
     {
-        public Item(int price, SpecialOffer specialOffer)
+        public Item(int price, SpecialOffer specialOffer = null)
         {
             this.Price = price;
             this.SpecialOffer = specialOffer;
@@ -51,20 +51,15 @@ namespace BeFaster.App.Solutions.CHK
 
     public static class CheckoutSolution
     {
-        private static Dictionary<char, int> prices = new Dictionary<char, int>
+        private static Dictionary<char, Item> prices = new Dictionary<char, Item>
         {
-            { 'A', 50 },
-            { 'B', 30 },
-            { 'C', 20 },
-            { 'D', 15 },
-            { 'E', 40 }
+            { 'A', new Item(50, new SpecialOffer(3, 130)) },
+            { 'B', new Item(30, new SpecialOffer(2, 45)) },
+            { 'C', new Item(20) },
+            { 'D', new Item(15) },
+            { 'E', new Item(40, new SpecialOffer(2, null, 'B')) }
         };
-        private static Dictionary<char, SpecialOffer> specialOffers = new Dictionary<char, SpecialOffer>
-        {
-            { 'A', new SpecialOffer(3, 130) },
-            { 'B', new SpecialOffer(2, 45) },
-            { 'E', new SpecialOffer(2, null, 'B') }
-        };
+
         public static int ComputePrice(string skus)
         {
             if (string.IsNullOrEmpty(skus))
@@ -99,26 +94,19 @@ namespace BeFaster.App.Solutions.CHK
                     return -1;
                 }
 
-                if (specialOffers.TryGetValue(item.Key, out var specialOffer) && specialOffer.Quantity <= item.Value)
+                if (price.SpecialOffer != null)
                 {
-                    if (specialOffer.Price != null)
-                    {
-                        //var offerMultiplier = item.Value / specialOffer.Quantity;
-                        //var remainder = item.Value - (offerMultiplier * specialOffer.Quantity);
-                        //totalPrice += (offerMultiplier * specialOffer.Price.Value) + (remainder * price);
-                        totalPrice += CalculateItemPrice(item.Value, price, specialOffer);
-                    }
-                    else
-                    {
-                        if (itemQuantities.TryGetValue(specialOffer.ItemOffer.Value, out var itemOfferQuantity))
-                        {
-                            totalPrice -= CalculateDiscount(specialOffer.ItemOffer.Value, itemOfferQuantity);
-                        }
-                        totalPrice += price * item.Value;
-                    }
+                    //var offerMultiplier = item.Value / specialOffer.Quantity;
+                    //var remainder = item.Value - (offerMultiplier * specialOffer.Quantity);
+                    //totalPrice += (offerMultiplier * specialOffer.Price.Value) + (remainder * price);
+                    totalPrice += CalculateItemPrice(item.Value, price);
                 }
                 else
                 {
+                    if (itemQuantities.TryGetValue(specialOffer.ItemOffer.Value, out var itemOfferQuantity))
+                    {
+                        totalPrice -= CalculateDiscount(specialOffer.ItemOffer.Value, itemOfferQuantity);
+                    }
                     totalPrice += price * item.Value;
                 }
             }
@@ -139,8 +127,9 @@ namespace BeFaster.App.Solutions.CHK
             }
         }
 
-        private static int CalculateItemPrice(int quantity, int price, SpecialOffer specialOffer)
+        private static int CalculateItemPrice(int quantity, Item item)
         {
+            if(spec)
             var offerMultiplier = quantity / specialOffer.Quantity;
             var remainder = quantity - (offerMultiplier * specialOffer.Quantity);
             return (offerMultiplier * specialOffer.Price.Value) + (remainder * price);
@@ -148,4 +137,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
