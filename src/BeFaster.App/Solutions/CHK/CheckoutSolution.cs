@@ -90,27 +90,18 @@ namespace BeFaster.App.Solutions.CHK
 
             foreach (var sku in skuQuantities)
             {
-                if(!prices.TryGetValue(sku.Key, out var price))
+                if(!prices.TryGetValue(sku.Key, out var item))
                 {
                     return -1;
                 }
 
-                totalPrice += CalculateItemPrice(sku.Value, price);
+                totalPrice += CalculateItemPrice(sku.Value, item);
 
-                if (price.SpecialOffer != null)
+                totalPrice -= CalculateDiscount(sku.Value, item);
+
+                if (skuQuantities.TryGetValue(specialOffer.ItemOffer.Value, out var itemOfferQuantity))
                 {
-                    //var offerMultiplier = item.Value / specialOffer.Quantity;
-                    //var remainder = item.Value - (offerMultiplier * specialOffer.Quantity);
-                    //totalPrice += (offerMultiplier * specialOffer.Price.Value) + (remainder * price);
-                    
-                }
-                else
-                {
-                    if (skuQuantities.TryGetValue(specialOffer.ItemOffer.Value, out var itemOfferQuantity))
-                    {
-                        totalPrice -= CalculateDiscount(specialOffer.ItemOffer.Value, itemOfferQuantity);
-                    }
-                    totalPrice += price * sku.Value;
+                    totalPrice -= CalculateDiscount(specialOffer.ItemOffer.Value, itemOfferQuantity);
                 }
             }
 
@@ -122,8 +113,12 @@ namespace BeFaster.App.Solutions.CHK
             return c >= 65 && c <= 90;
         }
 
-        private static int CalculateDiscount(char item, int quantity)
+        private static int CalculateDiscount(int quantity, Item item)
         {
+            if (item.SpecialOffer?.ItemOffer == null || )
+            {
+                return 
+            }
             if (!prices.TryGetValue(item, out var price))
             {
                 return 0;
@@ -144,6 +139,3 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
-
-
-
