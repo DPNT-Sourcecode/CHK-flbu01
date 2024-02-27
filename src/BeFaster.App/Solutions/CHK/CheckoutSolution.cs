@@ -62,7 +62,7 @@ namespace BeFaster.App.Solutions.CHK
 
         public SpecialOffer GetSpecialOfferForOtherItems(int quantity)
         {
-            return this.SpecialOffers.FirstOrDefault(x => x.Quantity > quantity && x.Item.HasValue);
+            return this.SpecialOffers.FirstOrDefault(x => x.Quantity <= quantity && x.Item.HasValue);
         }
     }
 
@@ -151,14 +151,15 @@ namespace BeFaster.App.Solutions.CHK
 
         private static int CalculateDiscount(Dictionary<char, int> skuQuantities, int quantity, Item item)
         {
-            if (item.SpecialOffer?.Item == null
-                || !prices.TryGetValue(item.SpecialOffer.Item.Value, out var offeredItem)
-                || !skuQuantities.TryGetValue(item.SpecialOffer.Item.Value, out var offeredItemQuantity))
+            var specialOffer = item.GetSpecialOfferForOtherItems(quantity);
+            if (specialOffer?.Item == null
+                || !prices.TryGetValue(specialOffer.Item.Value, out var offeredItem)
+                || !skuQuantities.TryGetValue(specialOffer.Item.Value, out var offeredItemQuantity))
             {
                 return 0;
             }
 
-            var newOfferedItemQuantity = Math.Max(offeredItemQuantity - (quantity / item.SpecialOffer.Quantity), 0);
+            var newOfferedItemQuantity = Math.Max(offeredItemQuantity - (quantity / specialOffer.Quantity), 0);
 
             var offeredItemTotalPrice = CalculateItemPrice(offeredItemQuantity, offeredItem);
             var newOfferedItemTotalPrice = CalculateItemPrice(newOfferedItemQuantity, offeredItem);
@@ -185,6 +186,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 

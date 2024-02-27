@@ -13,6 +13,8 @@ namespace BeFaster.App.Tests.Solutions.CHK
         [InlineData("ABABCE", 205)]
         [InlineData("ABACEE", 200)]
         [InlineData("ABABCEE", 230)]
+        [InlineData("ABABCEEA", 260)]
+        [InlineData("ABABCEEAAA", 260)]
         public void ComputePrice_ShouldReturnValidResult(string skus, int expectedResult)
         {
             //Arrange
@@ -36,3 +38,4 @@ namespace BeFaster.App.Tests.Solutions.CHK
         }
     }
 }
+
