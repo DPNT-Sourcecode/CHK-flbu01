@@ -23,6 +23,19 @@ namespace BeFaster.App.Solutions.CHK
     //| D    | 15    |                        |
     //| E    | 40    | 2E get one B free      |
     //+------+-------+------------------------+
+    public class Item
+    {
+        public Item(int price, SpecialOffer specialOffer)
+        {
+            this.Price = price;
+            this.SpecialOffer = specialOffer;
+        }
+
+        public int Price { get; }
+
+        public SpecialOffer SpecialOffer { get; }
+    }
+    
     public class SpecialOffer 
     {
         public SpecialOffer(int quantity, int? price, char? itemOffer = null)
@@ -90,15 +103,16 @@ namespace BeFaster.App.Solutions.CHK
                 {
                     if (specialOffer.Price != null)
                     {
-                        var offerMultiplier = item.Value / specialOffer.Quantity;
-                        var remainder = item.Value - (offerMultiplier * specialOffer.Quantity);
-                        totalPrice += (offerMultiplier * specialOffer.Price.Value) + (remainder * price);
+                        //var offerMultiplier = item.Value / specialOffer.Quantity;
+                        //var remainder = item.Value - (offerMultiplier * specialOffer.Quantity);
+                        //totalPrice += (offerMultiplier * specialOffer.Price.Value) + (remainder * price);
+                        totalPrice += CalculateItemPrice(item.Value, price, specialOffer);
                     }
                     else
                     {
-                        if (itemQuantities.TryGetValue(specialOffer.ItemOffer.Value, out _))
+                        if (itemQuantities.TryGetValue(specialOffer.ItemOffer.Value, out var itemOfferQuantity))
                         {
-
+                            totalPrice -= CalculateDiscount(specialOffer.ItemOffer.Value, itemOfferQuantity);
                         }
                         totalPrice += price * item.Value;
                     }
@@ -116,5 +130,22 @@ namespace BeFaster.App.Solutions.CHK
         {
             return c >= 65 && c <= 90;
         }
+
+        private static int CalculateDiscount(char item, int quantity)
+        {
+            if (!prices.TryGetValue(item, out var price))
+            {
+                return 0;
+            }
+        }
+
+        private static int CalculateItemPrice(int quantity, int price, SpecialOffer specialOffer)
+        {
+            var offerMultiplier = quantity / specialOffer.Quantity;
+            var remainder = quantity - (offerMultiplier * specialOffer.Quantity);
+            return (offerMultiplier * specialOffer.Price.Value) + (remainder * price);
+
+        }
     }
 }
+
