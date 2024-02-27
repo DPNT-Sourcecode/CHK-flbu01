@@ -33,13 +33,22 @@ namespace BeFaster.App.Solutions.CHK
             {
                 return -1;
             }
-            var totalPrice = 0;
+            var checkoutQuantities = new Dictionary<char, int>();
 
             foreach(var c in skus)
             {
                 if (!IsCapitalLetter(c))
                 {
                     return -1;
+                }
+
+                if (checkoutQuantities.TryGetValue(c, out var quantity))
+                {
+                    checkoutQuantities[c] = quantity + 1;
+                }
+                else
+                {
+                    checkoutQuantities.Add(c, 1);
                 }
             }
 
@@ -52,6 +61,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
