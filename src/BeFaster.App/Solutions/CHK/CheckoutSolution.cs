@@ -78,7 +78,8 @@ namespace BeFaster.App.Solutions.CHK
 
         private static bool IsCapitalLetter(char c)
         {
-            return c >= 101 && c <= 132;
+            return c >= 65 && c <= 90;
         }
     }
 }
+
