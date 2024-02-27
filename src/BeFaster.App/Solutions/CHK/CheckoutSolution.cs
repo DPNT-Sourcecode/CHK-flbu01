@@ -49,7 +49,7 @@ namespace BeFaster.App.Solutions.CHK
                 }
                 totalPrice -= specialOffer.DiscountOffer(missingQuantity, this.Price);
 
-                missingQuantity -= (quantity / specialOffer.Quantity) * specialOffer.Quantity;
+                missingQuantity = (missingQuantity - specialOffer.Quantity) * (missingQuantity / specialOffer.Quantity);
             }
 
             return totalPrice;
@@ -168,6 +168,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
