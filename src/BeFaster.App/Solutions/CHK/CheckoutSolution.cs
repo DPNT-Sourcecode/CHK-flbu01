@@ -31,7 +31,7 @@ namespace BeFaster.App.Solutions.CHK
         {
             if (string.IsNullOrEmpty(skus))
             {
-                return -1;
+                return 0;
             }
             var itemQuantities = new Dictionary<char, int>();
 
@@ -82,4 +82,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
