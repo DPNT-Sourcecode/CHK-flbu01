@@ -51,25 +51,13 @@ namespace BeFaster.App.Solutions.CHK
                     continue;
                 }
 
-                if (CalculateItemPrice(quantity, specialOffer) < CalculateItemPrice(quantity, value))
+                if (specialOffer.CalculateItemPrice(quantity, this.Price) < value.CalculateItemPrice(quantity, this.Price))
                 {
                     value = specialOffer;
                 }
             }
 
             return value;
-        }
-
-        public int CalculateItemPrice(int quantity, SpecialOffer specialOffer)
-        {
-            if (specialOffer?.Price != null && quantity >= specialOffer.Quantity)
-            {
-                var offerMultiplier = quantity / specialOffer.Quantity;
-                var remainder = quantity - (offerMultiplier * specialOffer.Quantity);
-                return (offerMultiplier * specialOffer.Price.Value) + (remainder * this.Price);
-            }
-
-            return quantity * this.Price;
         }
     }
 
@@ -84,6 +72,18 @@ namespace BeFaster.App.Solutions.CHK
         public int Quantity { get; }
         public int? Price { get; }
         public char? Item { get; }
+
+        public int CalculateItemPrice(int quantity, int unitPrice)
+        {
+            if (this.Price != null && quantity >= this.Quantity)
+            {
+                var offerMultiplier = quantity / this.Quantity;
+                var remainder = quantity - (offerMultiplier * this.Quantity);
+                return (offerMultiplier * this.Price.Value) + (remainder * unitPrice);
+            }
+
+            return quantity * unitPrice;
+        }
     }
 
     public static class CheckoutSolution
@@ -168,11 +168,11 @@ namespace BeFaster.App.Solutions.CHK
 
         private static int CalculateItemPrice(int quantity, Item item)
         {
-            if (item.SpecialOffer?.Price != null && quantity >= item.SpecialOffer.Quantity)
+            var bestSpecialOffer = item.GetBestSpecialOffer(quantity);
+
+            if (bestSpecialOffer != null)
             {
-                var offerMultiplier = quantity / item.SpecialOffer.Quantity;
-                var remainder = quantity - (offerMultiplier * item.SpecialOffer.Quantity);
-                return (offerMultiplier * item.SpecialOffer.Price.Value) + (remainder * item.Price);
+                return bestSpecialOffer.CalculateItemPrice(quantity, item.Price);
             }
 
             return quantity * item.Price;
@@ -180,4 +180,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
