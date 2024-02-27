@@ -88,9 +88,20 @@ namespace BeFaster.App.Solutions.CHK
 
                 if (specialOffers.TryGetValue(item.Key, out var specialOffer) && specialOffer.Quantity <= item.Value)
                 {
-                    var offerMultiplier = item.Value / specialOffer.Quantity;
-                    var remainder = item.Value - (offerMultiplier * specialOffer.Quantity);
-                    totalPrice += (offerMultiplier * specialOffer.Price) + (remainder * price);
+                    if (specialOffer.Price != null)
+                    {
+                        var offerMultiplier = item.Value / specialOffer.Quantity;
+                        var remainder = item.Value - (offerMultiplier * specialOffer.Quantity);
+                        totalPrice += (offerMultiplier * specialOffer.Price.Value) + (remainder * price);
+                    }
+                    else
+                    {
+                        if (itemQuantities.TryGetValue(specialOffer.ItemOffer.Value, out _))
+                        {
+
+                        }
+                        totalPrice += price * item.Value;
+                    }
                 }
                 else
                 {
@@ -107,6 +118,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
