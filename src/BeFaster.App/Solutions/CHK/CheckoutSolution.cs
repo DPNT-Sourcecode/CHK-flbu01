@@ -117,7 +117,15 @@ namespace BeFaster.App.Solutions.CHK
 
             var newOfferedItemQuantity = Math.Max(offeredItemQuantity - (quantity / item.SpecialOffer.Quantity), 0);
 
-            return Math.Min(CalculateItemPrice(offeredItemQuantity, offeredItem), CalculateItemPrice(newOfferedItemQuantity, offeredItem));
+            var offeredItemTotalPrice = CalculateItemPrice(offeredItemQuantity, offeredItem);
+            var newOfferedItemTotalPrice = CalculateItemPrice(newOfferedItemQuantity, offeredItem);
+
+            if (newOfferedItemTotalPrice < offeredItemTotalPrice)
+            {
+                return offeredItemTotalPrice - newOfferedItemTotalPrice;
+            }
+
+            return 0;
         }
 
         private static int CalculateItemPrice(int quantity, Item item)
@@ -134,5 +142,6 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
