@@ -84,7 +84,9 @@ namespace BeFaster.App.Solutions.CHK
             {
                 var offerMultiplier = quantity / this.Quantity;
                 var remainder = quantity - (offerMultiplier * this.Quantity);
-                return (offerMultiplier * this.Price.Value) + (remainder * unitPrice);
+                var totalPrice = (offerMultiplier * this.Price.Value) + (remainder * unitPrice);
+
+                return totalPrice;
             }
 
             return quantity * unitPrice;
@@ -186,6 +188,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
