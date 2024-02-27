@@ -9,7 +9,7 @@ namespace BeFaster.App.Tests.Solutions.SUM
         [Theory]
         [InlineData("John", "Hello, John!")]
         [InlineData("", "Hello, !")]
-        public void Hello(string friendName, string expectedResult)
+        public void Hello_ShouldReturnValidResult(string friendName, string expectedResult)
         {
             //Arrange
             var result = HelloSolution.Hello(friendName);
@@ -17,7 +17,18 @@ namespace BeFaster.App.Tests.Solutions.SUM
             //Assert
             result.Should().Be(expectedResult);
         }
+
+        [Fact]
+        public void Hello_WithNullFriendName_ShouldReturnValidResult()
+        {
+            //Arrange
+            var result = HelloSolution.Hello(null);
+
+            //Assert
+            result.Should().Be("Hello, !");
+        }
     }
 }
+
 
 

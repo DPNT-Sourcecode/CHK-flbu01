@@ -10,7 +10,7 @@ namespace BeFaster.App.Tests.Solutions.SUM
         [InlineData(0, 0, 0)]
         [InlineData(100, 100, 200)]
         [InlineData(50, 45, 95)]
-        public void ComputeSum(int x, int y, int expectedResult)
+        public void ComputeSum_ShouldReturnSum(int x, int y, int expectedResult)
         {
             //Arrange
             var result = SumSolution.Sum(x, y);
@@ -34,3 +34,4 @@ namespace BeFaster.App.Tests.Solutions.SUM
         }
     }
 }
+
