@@ -5,7 +5,7 @@ namespace BeFaster.App.Tests.Solutions.TST
     
         [Fact]
         public void RunApply() {
-            Assert.Equal(One.apply(), 1);
+            Assert.Equal(1, One.apply());
         }
     }
 }

@@ -12,4 +12,3 @@ namespace BeFaster.App.Tests.Solutions.TST
         }
     }
 }
-
