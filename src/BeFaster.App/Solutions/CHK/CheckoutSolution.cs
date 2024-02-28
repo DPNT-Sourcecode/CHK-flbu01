@@ -295,31 +295,31 @@ namespace BeFaster.App.Solutions.CHK
         private static int CalculateGroupItemDiscount(Dictionary<char, int> skuQuantities, KeyValuePair<char, int> sku, Item item)
         {
             var specialOffer = item.GetGroupItemSpecialOffer();
-            if (specialOffer?.Item == null
-                || !prices.TryGetValue(specialOffer.Item.Value, out var offeredItem)
-                || !skuQuantities.TryGetValue(specialOffer.Item.Value, out var offeredItemQuantity))
+            if (specialOffer == null)
             {
                 return 0;
             }
 
-            var amountOfSpecialOffersAvailable = sku.Value / specialOffer.Quantity;
-
-            if (sku.Key == specialOffer.Item.Value)
+            var sortedGroupItems = new List<int>();
+            foreach (var groupItem in specialOffer.Group)
             {
-                amountOfSpecialOffersAvailable = sku.Value / (specialOffer.Quantity + 1);
+                if (!skuQuantities.TryGetValue(groupItem, out var groupItemQuantity)
+                    || !prices.TryGetValue(groupItem, out var groupItemPrice))
+                {
+                    continue;
+                }
+
+                var quantity = groupItemQuantity;
+
+                while (quantity > 0)
+                {
+                    sortedGroupItems.Add(groupItemPrice.Price - (specialOffer.Price.Value / 3));
+                    quantity--;
+                }
             }
 
-            var newOfferedItemQuantity = Math.Max(offeredItemQuantity - amountOfSpecialOffersAvailable, 0);
-
-            var offeredItemTotalPrice = offeredItem.CalculatePrice(offeredItemQuantity);
-            var newOfferedItemTotalPrice = offeredItem.CalculatePrice(newOfferedItemQuantity);
-
-            if (newOfferedItemTotalPrice < offeredItemTotalPrice)
-            {
-                return offeredItemTotalPrice - newOfferedItemTotalPrice;
-            }
-
-            return 0;
+            return sortedGroupItems.Take(sortedGroupItems.Count / 3).Sum();
         }
     }
 }
+
