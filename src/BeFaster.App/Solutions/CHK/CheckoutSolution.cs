@@ -239,7 +239,7 @@ namespace BeFaster.App.Solutions.CHK
             }
 
             var totalPrice = 0;
-            var itemsAlreadyDiscountedForGroupDiscount = new Dictionary<char>();
+            var itemsAlreadyDiscountedForGroupDiscount = new HashSet<char>();
 
             foreach (var sku in skuQuantities)
             {
@@ -252,7 +252,7 @@ namespace BeFaster.App.Solutions.CHK
 
                 totalPrice -= CalculateSingleItemDiscount(skuQuantities, sku, item);
 
-                totalPrice -= CalculateGroupItemDiscount(skuQuantities, item);
+                totalPrice -= CalculateGroupItemDiscount(skuQuantities, item, itemsAlreadyDiscountedForGroupDiscount);
             }
 
             return totalPrice;
@@ -293,7 +293,7 @@ namespace BeFaster.App.Solutions.CHK
             return 0;
         }
 
-        private static int CalculateGroupItemDiscount(Dictionary<char, int> skuQuantities, Item item)
+        private static int CalculateGroupItemDiscount(Dictionary<char, int> skuQuantities, Item item, HashSet<char> itemsAlreadyDiscountedForGroupDiscount)
         {
             var specialOffer = item.GetGroupItemSpecialOffer();
             if (specialOffer == null)
@@ -305,7 +305,8 @@ namespace BeFaster.App.Solutions.CHK
             foreach (var groupItem in specialOffer.Group)
             {
                 if (!skuQuantities.TryGetValue(groupItem, out var groupItemQuantity)
-                    || !prices.TryGetValue(groupItem, out var groupItemPrice))
+                    || !prices.TryGetValue(groupItem, out var groupItemPrice)
+                    || itemsAlreadyDiscountedForGroupDiscount.TryGetValue(groupItem, out _))
                 {
                     continue;
                 }
@@ -317,11 +318,14 @@ namespace BeFaster.App.Solutions.CHK
                     sortedGroupItems.Add(groupItemPrice.Price - (specialOffer.Price.Value / 3));
                     quantity--;
                 }
+
+                itemsAlreadyDiscountedForGroupDiscount.Add(groupItem);
             }
 
             return sortedGroupItems.OrderByDescending(x => x).Take(sortedGroupItems.Count / 3).Sum();
         }
     }
 }
+
 
 
