@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 
 namespace BeFaster.App.Solutions.CHK
 {
@@ -67,6 +68,37 @@ namespace BeFaster.App.Solutions.CHK
     //| Y    | 10    |                        |
     //| Z    | 50    |                        |
     //+------+-------+------------------------+
+    // Round 5
+    //+------+-------+---------------------------------+
+    //| Item | Price | Special offers                  |
+    //+------+-------+---------------------------------+
+    //| A    | 50    | 3A for 130, 5A for 200          |
+    //| B    | 30    | 2B for 45                       |
+    //| C    | 20    |                                 |
+    //| D    | 15    |                                 |
+    //| E    | 40    | 2E get one B free               |
+    //| F    | 10    | 2F get one F free               |
+    //| G    | 20    |                                 |
+    //| H    | 10    | 5H for 45, 10H for 80           |
+    //| I    | 35    |                                 |
+    //| J    | 60    |                                 |
+    //| K    | 70    | 2K for 120                      |
+    //| L    | 90    |                                 |
+    //| M    | 15    |                                 |
+    //| N    | 40    | 3N get one M free               |
+    //| O    | 10    |                                 |
+    //| P    | 50    | 5P for 200                      |
+    //| Q    | 30    | 3Q for 80                       |
+    //| R    | 50    | 3R get one Q free               |
+    //| S    | 20    | buy any 3 of(S, T, X, Y, Z) for 45 |
+    //| T    | 20    | buy any 3 of(S, T, X, Y, Z) for 45 |
+    //| U    | 40    | 3U get one U free               |
+    //| V    | 50    | 2V for 90, 3V for 130           |
+    //| W    | 20    |                                 |
+    //| X    | 17    | buy any 3 of(S, T, X, Y, Z) for 45 |
+    //| Y    | 20    | buy any 3 of(S, T, X, Y, Z) for 45 |
+    //| Z    | 21    | buy any 3 of(S, T, X, Y, Z) for 45 |
+    //+------+-------+---------------------------------+
 
     public class Item
     {
@@ -155,7 +187,7 @@ namespace BeFaster.App.Solutions.CHK
             { 'H', new Item(10, new List<SpecialOffer>{ new SpecialOffer(5, 45), new SpecialOffer(10, 80) }) },
             { 'I', new Item(35) },
             { 'J', new Item(60) },
-            { 'K', new Item(80, new List<SpecialOffer>{ new SpecialOffer(2, 150) }) },
+            { 'K', new Item(70, new List<SpecialOffer>{ new SpecialOffer(2, 120) }) },
             { 'L', new Item(90) },
             { 'M', new Item(15) },
             { 'N', new Item(40, new List<SpecialOffer>{ new SpecialOffer(3, null, 'M') }) },
@@ -163,14 +195,14 @@ namespace BeFaster.App.Solutions.CHK
             { 'P', new Item(50, new List<SpecialOffer>{ new SpecialOffer(5, 200) }) },
             { 'Q', new Item(30, new List<SpecialOffer>{ new SpecialOffer(3, 80) }) },
             { 'R', new Item(50, new List<SpecialOffer>{ new SpecialOffer(3, null, 'Q') }) },
-            { 'S', new Item(30) },
+            { 'S', new Item(20) },
             { 'T', new Item(20) },
             { 'U', new Item(40, new List<SpecialOffer>{ new SpecialOffer(3, null, 'U') }) },
             { 'V', new Item(50, new List<SpecialOffer>{ new SpecialOffer(2, 90), new SpecialOffer(3, 130) }) },
             { 'W', new Item(20) },
-            { 'X', new Item(90) },
-            { 'Y', new Item(10) },
-            { 'Z', new Item(50) }
+            { 'X', new Item(17) },
+            { 'Y', new Item(20) },
+            { 'Z', new Item(21) }
         };
 
         public static int ComputePrice(string skus)
@@ -256,5 +288,6 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
