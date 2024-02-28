@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using BeFaster.App.Solutions.TST;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,38 @@ namespace BeFaster.App.Solutions.CHK
     //| E    | 40    | 2E get one B free      |
     //| F    | 10    | 2F get one F free      |
     //+------+-------+------------------------+
+    // Round 4
+    //+------+-------+------------------------+
+    //| Item | Price | Special offers         |
+    //+------+-------+------------------------+
+    //| A    | 50    | 3A for 130, 5A for 200 |
+    //| B    | 30    | 2B for 45              |
+    //| C    | 20    |                        |
+    //| D    | 15    |                        |
+    //| E    | 40    | 2E get one B free      |
+    //| F    | 10    | 2F get one F free      |
+    //| G    | 20    |                        |
+    //| H    | 10    | 5H for 45, 10H for 80  |
+    //| I    | 35    |                        |
+    //| J    | 60    |                        |
+    //| K    | 80    | 2K for 150             |
+    //| L    | 90    |                        |
+    //| M    | 15    |                        |
+    //| N    | 40    | 3N get one M free      |
+    //| O    | 10    |                        |
+    //| P    | 50    | 5P for 200             |
+    //| Q    | 30    | 3Q for 80              |
+    //| R    | 50    | 3R get one Q free      |
+    //| S    | 30    |                        |
+    //| T    | 20    |                        |
+    //| U    | 40    | 3U get one U free      |
+    //| V    | 50    | 2V for 90, 3V for 130  |
+    //| W    | 20    |                        |
+    //| X    | 90    |                        |
+    //| Y    | 10    |                        |
+    //| Z    | 50    |                        |
+    //+------+-------+------------------------+
+
     public class Item
     {
         public Item(int price, List<SpecialOffer> specialOffers = null)
@@ -117,7 +150,27 @@ namespace BeFaster.App.Solutions.CHK
             { 'C', new Item(20) },
             { 'D', new Item(15) },
             { 'E', new Item(40, new List<SpecialOffer>{ new SpecialOffer(2, null, 'B') }) },
-            { 'F', new Item(10, new List<SpecialOffer>{ new SpecialOffer(2, null, 'F') }) }
+            { 'F', new Item(10, new List<SpecialOffer>{ new SpecialOffer(2, null, 'F') }) },
+            { 'G', new Item(20) },
+            { 'H', new Item(10) },
+            { 'I', new Item(35) },
+            { 'J', new Item(60) },
+            { 'K', new Item(80) },
+            { 'L', new Item(90) },
+            { 'M', new Item(15) },
+            { 'N', new Item(40) },
+            { 'O', new Item(10) },
+            { 'P', new Item(50) },
+            { 'Q', new Item(30) },
+            { 'R', new Item(50) },
+            { 'S', new Item(30) },
+            { 'T', new Item(20) },
+            { 'U', new Item(40) },
+            { 'V', new Item(50) },
+            { 'W', new Item(20) },
+            { 'X', new Item(90) },
+            { 'Y', new Item(10) },
+            { 'Z', new Item(50) },
         };
 
         public static int ComputePrice(string skus)
@@ -203,3 +256,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
