@@ -147,9 +147,9 @@ namespace BeFaster.App.Solutions.CHK
             return this.SpecialOffers.FirstOrDefault(x => x.Quantity <= quantity && x.Item.HasValue);
         }
 
-        public SpecialOffer GetGroupItemSpecialOffer(int quantity)
+        public SpecialOffer GetGroupItemSpecialOffer()
         {
-            return this.SpecialOffers.FirstOrDefault(x => x.Quantity <= quantity && x.Item.HasValue);
+            return this.SpecialOffers.FirstOrDefault(x => x.Group != null && x.Price != null);
         }
     }
 
@@ -294,7 +294,7 @@ namespace BeFaster.App.Solutions.CHK
 
         private static int CalculateGroupItemDiscount(Dictionary<char, int> skuQuantities, KeyValuePair<char, int> sku, Item item)
         {
-            var specialOffer = item.GetSpecialOfferForOtherItems(sku.Value);
+            var specialOffer = item.GetGroupItemSpecialOffer();
             if (specialOffer?.Item == null
                 || !prices.TryGetValue(specialOffer.Item.Value, out var offeredItem)
                 || !skuQuantities.TryGetValue(specialOffer.Item.Value, out var offeredItemQuantity))
@@ -323,8 +323,3 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
-
-
-
-
-
