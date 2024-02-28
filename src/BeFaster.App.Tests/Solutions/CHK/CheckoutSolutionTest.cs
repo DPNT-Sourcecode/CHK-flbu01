@@ -13,7 +13,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
         [InlineData("ABABCE", 205)]
         [InlineData("ABACEE", 200)]
         [InlineData("ABABCEE", 230)]
-        [InlineData("ABABCEEEE", 295)]
+        [InlineData("ABABCEEEE", 280)]
         [InlineData("ABABCEEA", 260)]
         [InlineData("ABABCEEAAA", 330)]
         [InlineData("ABABCEEAAAA", 380)]
@@ -28,7 +28,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
             var result = CheckoutSolution.ComputePrice(skus);
 
             //Assert
-            result.Should().Be(expectedResult);
+             result.Should().Be(expectedResult);
         }
 
         [Theory]
@@ -45,5 +45,6 @@ namespace BeFaster.App.Tests.Solutions.CHK
         }
     }
 }
+
 
 
