@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -176,7 +177,19 @@ namespace BeFaster.App.Solutions.CHK
                 return 0;
             }
 
-            var newOfferedItemQuantity = Math.Max(offeredItemQuantity - (sku.Value / specialOffer.Quantity), 0);
+            var amountOfSpecialOffersAvailable = sku.Value / specialOffer.Quantity;
+
+            if (sku.Key == specialOffer.Item.Value)
+            {
+                amountOfSpecialOffersAvailable = sku.Value / (specialOffer.Quantity + 1);
+            }
+
+            var newOfferedItemQuantity = Math.Max(offeredItemQuantity - amountOfSpecialOffersAvailable, 0);
+
+            if (newOfferedItemQuantity < sku.Value)
+            {
+
+            }
 
             var offeredItemTotalPrice = offeredItem.CalculatePrice(offeredItemQuantity);
             var newOfferedItemTotalPrice = offeredItem.CalculatePrice(newOfferedItemQuantity);
@@ -190,6 +203,3 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
-
-
-
