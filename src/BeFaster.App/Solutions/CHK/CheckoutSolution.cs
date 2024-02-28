@@ -58,7 +58,7 @@ namespace BeFaster.App.Solutions.CHK
 
                 if (discount > 0)
                 {
-                    missingQuantity = (missingQuantity - specialOffer.Quantity) * (missingQuantity / specialOffer.Quantity);
+                    missingQuantity -= specialOffer.Quantity * (missingQuantity / specialOffer.Quantity);
                 }
             }
 
@@ -178,3 +178,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
