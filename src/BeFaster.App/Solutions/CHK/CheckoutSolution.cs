@@ -111,7 +111,7 @@ namespace BeFaster.App.Solutions.CHK
 
         public int Price { get; }
 
-        public List<SpecialOffer> SpecialOffers { get; } //Replace by SortedSet ordered by quantity descending
+        public List<SpecialOffer> SpecialOffers { get; } //Improvement oportunity: Replace by SortedSet ordered by quantity descending
 
         public int CalculatePrice(int quantity)
         {
@@ -120,7 +120,7 @@ namespace BeFaster.App.Solutions.CHK
 
             foreach (var specialOffer in this.SpecialOffers)
             {
-                if (!specialOffer.Price.HasValue)
+                if (!specialOffer.Price.HasValue || specialOffer.Group != null)
                 {
                     continue;
                 }
@@ -265,6 +265,7 @@ namespace BeFaster.App.Solutions.CHK
 
         private static int CalculateSingleItemDiscount(Dictionary<char, int> skuQuantities, KeyValuePair<char, int> sku, Item item)
         {
+            //Improvement oportunity: Do a foreach instead of a first or default to support multiple Single Item Discounts
             var specialOffer = item.GetSingleItemSpecialOffer(sku.Value);
             if (specialOffer?.Item == null
                 || !prices.TryGetValue(specialOffer.Item.Value, out var offeredItem)
@@ -295,6 +296,7 @@ namespace BeFaster.App.Solutions.CHK
 
         private static int CalculateGroupItemDiscount(Dictionary<char, int> skuQuantities, Item item, HashSet<char> itemsAlreadyDiscountedForGroupDiscount)
         {
+            //Improvement oportunity: Do a foreach instead of a first or default to support multiple group Item Discounts
             var specialOffer = item.GetGroupItemSpecialOffer();
             if (specialOffer == null)
             {
@@ -326,6 +328,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
