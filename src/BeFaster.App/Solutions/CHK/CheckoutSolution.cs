@@ -322,10 +322,11 @@ namespace BeFaster.App.Solutions.CHK
                 itemsAlreadyDiscountedForGroupDiscount.Add(groupItem);
             }
 
-            return sortedGroupItems.OrderByDescending(x => x).Take(sortedGroupItems.Count / 3).Sum();
+            return sortedGroupItems.OrderByDescending(x => x).Take((sortedGroupItems.Count / 3) * 3).Sum();
         }
     }
 }
+
 
 
 
