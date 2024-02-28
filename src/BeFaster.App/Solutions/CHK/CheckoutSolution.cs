@@ -239,6 +239,7 @@ namespace BeFaster.App.Solutions.CHK
             }
 
             var totalPrice = 0;
+            var itemsAlreadyDiscountedForGroupDiscount = new Dictionary<char>();
 
             foreach (var sku in skuQuantities)
             {
@@ -251,7 +252,7 @@ namespace BeFaster.App.Solutions.CHK
 
                 totalPrice -= CalculateSingleItemDiscount(skuQuantities, sku, item);
 
-                totalPrice -= CalculateGroupItemDiscount(skuQuantities, sku, item);
+                totalPrice -= CalculateGroupItemDiscount(skuQuantities, item);
             }
 
             return totalPrice;
@@ -292,7 +293,7 @@ namespace BeFaster.App.Solutions.CHK
             return 0;
         }
 
-        private static int CalculateGroupItemDiscount(Dictionary<char, int> skuQuantities, KeyValuePair<char, int> sku, Item item)
+        private static int CalculateGroupItemDiscount(Dictionary<char, int> skuQuantities, Item item)
         {
             var specialOffer = item.GetGroupItemSpecialOffer();
             if (specialOffer == null)
@@ -322,4 +323,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
