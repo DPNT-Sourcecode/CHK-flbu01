@@ -152,25 +152,25 @@ namespace BeFaster.App.Solutions.CHK
             { 'E', new Item(40, new List<SpecialOffer>{ new SpecialOffer(2, null, 'B') }) },
             { 'F', new Item(10, new List<SpecialOffer>{ new SpecialOffer(2, null, 'F') }) },
             { 'G', new Item(20) },
-            { 'H', new Item(10) },
+            { 'H', new Item(10, new List<SpecialOffer>{ new SpecialOffer(5, 45), new SpecialOffer(10, 80) }) },
             { 'I', new Item(35) },
             { 'J', new Item(60) },
-            { 'K', new Item(80) },
+            { 'K', new Item(80, new List<SpecialOffer>{ new SpecialOffer(2, 150) }) },
             { 'L', new Item(90) },
             { 'M', new Item(15) },
-            { 'N', new Item(40) },
+            { 'N', new Item(40, new List<SpecialOffer>{ new SpecialOffer(3, null, 'M') }) },
             { 'O', new Item(10) },
-            { 'P', new Item(50) },
-            { 'Q', new Item(30) },
-            { 'R', new Item(50) },
+            { 'P', new Item(50, new List<SpecialOffer>{ new SpecialOffer(5, 200) }) },
+            { 'Q', new Item(30, new List<SpecialOffer>{ new SpecialOffer(3, 80) }) },
+            { 'R', new Item(50, new List<SpecialOffer>{ new SpecialOffer(3, null, 'Q') }) },
             { 'S', new Item(30) },
             { 'T', new Item(20) },
-            { 'U', new Item(40) },
-            { 'V', new Item(50) },
+            { 'U', new Item(40, new List<SpecialOffer>{ new SpecialOffer(3, null, 'U') }) },
+            { 'V', new Item(50, new List<SpecialOffer>{ new SpecialOffer(2, 90), new SpecialOffer(3, 130) }) },
             { 'W', new Item(20) },
             { 'X', new Item(90) },
             { 'Y', new Item(10) },
-            { 'Z', new Item(50) },
+            { 'Z', new Item(50) }
         };
 
         public static int ComputePrice(string skus)
@@ -256,4 +256,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
