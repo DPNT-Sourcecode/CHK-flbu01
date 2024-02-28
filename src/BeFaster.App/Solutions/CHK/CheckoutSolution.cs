@@ -318,7 +318,8 @@ namespace BeFaster.App.Solutions.CHK
                 }
             }
 
-            return sortedGroupItems.Take(sortedGroupItems.Count / 3).Sum();
+            return sortedGroupItems.OrderByDescending(x => x).Take(sortedGroupItems.Count / 3).Sum();
         }
     }
 }
+
