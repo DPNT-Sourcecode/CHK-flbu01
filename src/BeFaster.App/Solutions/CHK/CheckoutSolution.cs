@@ -23,6 +23,17 @@ namespace BeFaster.App.Solutions.CHK
     //| D    | 15    |                        |
     //| E    | 40    | 2E get one B free      |
     //+------+-------+------------------------+
+    // Round 3
+    //+------+-------+------------------------+
+    //| Item | Price | Special offers         |
+    //+------+-------+------------------------+
+    //| A    | 50    | 3A for 130, 5A for 200 |
+    //| B    | 30    | 2B for 45              |
+    //| C    | 20    |                        |
+    //| D    | 15    |                        |
+    //| E    | 40    | 2E get one B free      |
+    //| F    | 10    | 2F get one F free      |
+    //+------+-------+------------------------+
     public class Item
     {
         public Item(int price, List<SpecialOffer> specialOffers = null)
@@ -104,7 +115,8 @@ namespace BeFaster.App.Solutions.CHK
             { 'B', new Item(30, new List<SpecialOffer>{ new SpecialOffer(2, 45) }) },
             { 'C', new Item(20) },
             { 'D', new Item(15) },
-            { 'E', new Item(40, new List<SpecialOffer>{ new SpecialOffer(2, null, 'B') }) }
+            { 'E', new Item(40, new List<SpecialOffer>{ new SpecialOffer(2, null, 'B') }) },
+            { 'F', new Item(10, new List<SpecialOffer>{ new SpecialOffer(2, null, 'F') }) }
         };
 
         public static int ComputePrice(string skus)
@@ -178,4 +190,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
