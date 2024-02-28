@@ -150,15 +150,18 @@ namespace BeFaster.App.Solutions.CHK
 
     public class SpecialOffer
     {
-        public SpecialOffer(int quantity, int? price, char? item = null)
+        public SpecialOffer(int quantity, int? price, char? item = null, List<char> group = null)
         {
             this.Quantity = quantity;
             this.Price = price;
             this.Item = item;
+            this.Group = group;
+
         }
         public int Quantity { get; }
         public int? Price { get; }
         public char? Item { get; }
+        public List<char> Group { get; }
 
         public int DiscountOffer(int quantity, int unitPrice)
         {
@@ -195,14 +198,14 @@ namespace BeFaster.App.Solutions.CHK
             { 'P', new Item(50, new List<SpecialOffer>{ new SpecialOffer(5, 200) }) },
             { 'Q', new Item(30, new List<SpecialOffer>{ new SpecialOffer(3, 80) }) },
             { 'R', new Item(50, new List<SpecialOffer>{ new SpecialOffer(3, null, 'Q') }) },
-            { 'S', new Item(20) },
-            { 'T', new Item(20) },
+            { 'S', new Item(20, new List<SpecialOffer>{ new SpecialOffer(3, 45, null, new List<char> {'S','T','X','Y','Z'}) }) },
+            { 'T', new Item(20, new List<SpecialOffer>{ new SpecialOffer(3, 45, null, new List<char> {'S','T','X','Y','Z'}) }) },
             { 'U', new Item(40, new List<SpecialOffer>{ new SpecialOffer(3, null, 'U') }) },
             { 'V', new Item(50, new List<SpecialOffer>{ new SpecialOffer(2, 90), new SpecialOffer(3, 130) }) },
             { 'W', new Item(20) },
-            { 'X', new Item(17) },
-            { 'Y', new Item(20) },
-            { 'Z', new Item(21) }
+            { 'X', new Item(17, new List<SpecialOffer>{ new SpecialOffer(3, 45, null, new List<char> {'S','T','X','Y','Z'}) }) },
+            { 'Y', new Item(20, new List<SpecialOffer>{ new SpecialOffer(3, 45, null, new List<char> {'S','T','X','Y','Z'}) }) },
+            { 'Z', new Item(21, new List<SpecialOffer>{ new SpecialOffer(3, 45, null, new List<char> {'S','T','X','Y','Z'}) }) }
         };
 
         public static int ComputePrice(string skus)
@@ -288,6 +291,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
