@@ -155,7 +155,7 @@ namespace BeFaster.App.Solutions.CHK
 
                 totalPrice += item.CalculatePrice(sku.Value);
 
-                totalPrice -= CalculateDiscount(skuQuantities, sku.Value, item);
+                totalPrice -= CalculateDiscount(skuQuantities, sku, item);
             }
 
             return totalPrice;
@@ -166,9 +166,9 @@ namespace BeFaster.App.Solutions.CHK
             return c >= 65 && c <= 90;
         }
 
-        private static int CalculateDiscount(Dictionary<char, int> skuQuantities, int quantity, Item item)
+        private static int CalculateDiscount(Dictionary<char, int> skuQuantities, KeyValuePair<char, int> sku, Item item)
         {
-            var specialOffer = item.GetSpecialOfferForOtherItems(quantity);
+            var specialOffer = item.GetSpecialOfferForOtherItems(sku.Value);
             if (specialOffer?.Item == null
                 || !prices.TryGetValue(specialOffer.Item.Value, out var offeredItem)
                 || !skuQuantities.TryGetValue(specialOffer.Item.Value, out var offeredItemQuantity))
@@ -176,7 +176,7 @@ namespace BeFaster.App.Solutions.CHK
                 return 0;
             }
 
-            var newOfferedItemQuantity = Math.Max(offeredItemQuantity - (quantity / specialOffer.Quantity), 0);
+            var newOfferedItemQuantity = Math.Max(offeredItemQuantity - (sku.Value / specialOffer.Quantity), 0);
 
             var offeredItemTotalPrice = offeredItem.CalculatePrice(offeredItemQuantity);
             var newOfferedItemTotalPrice = offeredItem.CalculatePrice(newOfferedItemQuantity);
@@ -190,5 +190,6 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
